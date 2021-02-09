@@ -6,9 +6,24 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from './Login';
-import SignUp from './signUp'
+import SignUp from './signUp';
 import { createStackNavigator } from '@react-navigation/stack';
+import Get from './Get';
 
+
+const Stack = createStackNavigator();
+
+function MyStack() {
+  return (
+    <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Home" component={MyTabs} options={{ headerShown:false}} />
+      <Stack.Screen name="SignUp" component={SignUp} />
+    </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 
 function Feed() {
@@ -41,12 +56,12 @@ function MyTabs() {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
-      activeColor="#e91e63"
+      activeColor="#000000"
       barStyle={{ backgroundColor: 'lightpink' }}
     >
       <Tab.Screen
         name="Feed"
-        component={Feed}
+        component={Get}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -78,18 +93,5 @@ function MyTabs() {
   );
 }
 
-const Stack = createStackNavigator();
-export default class App extends Component {
-render(){
-  const navigation= this.props.navigation;
-  return(
-  
-    <NavigationContainer>
-    <MyTabs>
-    </MyTabs>
-    </NavigationContainer>
-  );
-}
 
-
-}
+export default MyStack;

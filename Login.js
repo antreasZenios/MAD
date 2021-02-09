@@ -1,37 +1,64 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Alert, Button, Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { NavigationContainer } from '@react-navigation/native';
 import App from './App';
 import SignUp from './signUp';
-import { createStackNavigator } from '@react-navigation/stack';
+//import   styles from './StyleSheet';
 
 
 
-const Stack = createStackNavigator();
+
+
 export default class Login extends Component {
 
-
-
-    state = {
+  constructor(props){
+    super(props);
+    global.key = "";
+    global.id = "";
+    this.state = {
       email: '',
       password: '',
+      key:'',
     };
 
+}
+    loginUser = () => {
+      const navigation=this.props.navigation;
+      let to_send = {
 
-  onLogin() {
-    const { email, password } = this.state;
+        email: this.state.email,
+        password: this.state.password,
 
-    Alert.alert('Credentials', `email: ${email} + password: ${password}`);
-  }
+      };
+
+      return fetch("http://10.0.2.2:3333/api/1.0.0/user/login", {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(to_send)
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+          key = responseJson.token;
+          id = responseJson.id;
+          console.log(key)
+          console.log(id)
+         navigation.navigate('Home')
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
+
+
+
+
 
   render() {
     const navigation= this.props.navigation;
     return (
-
 
 
 
@@ -57,18 +84,23 @@ export default class Login extends Component {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => this.navigation.navigate('App')}
+          onPress={() => this.loginUser() }
        >
          <Text style={styles.buttonText}> Login </Text>
-       </TouchableOpacity>
+        </TouchableOpacity>
 
-      </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('SignUp')}
+       >
+         <Text style={styles.buttonText2}> Don't have an account? </Text>
+        </TouchableOpacity>
+         </View>
 
 
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -97,6 +129,12 @@ const styles = StyleSheet.create({
   buttonText:{
     fontFamily: 'Baskerville',
     fontSize: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText2:{
+    fontFamily: 'Baskerville',
+    fontSize: 25,
     alignItems: 'center',
     justifyContent: 'center',
   },

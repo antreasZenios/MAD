@@ -1,43 +1,70 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Alert, Button, Text, TouchableOpacity, TextInput, View,StyleSheet } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { NavigationContainer } from '@react-navigation/native';
 //import {styles} from './styleSheet';
 import App from './App';
 import Login from './Login';
-import { createStackNavigator } from '@react-navigation/stack';
+
 
 
 
 
 export default class SignUp extends Component {
 
+
   constructor(props){
-      super(props);
+    super(props);
 
-//this.navigation=this.navigation.bind(this);
+    this.state = {
+      email: '',
+      password: '',
+      first_name:'',
+      last_name:'',
+    };
 
+//const  navigation = this.props.navigation;
 }
 
 
-    state = {
-      email: '',
-      password: '',
-      Name:'',
-      Surname:'',
-    };
+addUser = () => {
+  const  navigation = this.props.navigation;
+  let to_send = {
+    first_name: (this.state.first_name),
+    last_name: this.state.last_name,
+    email: this.state.email,
+    password: this.state.password,
+
+  };
+
+  return fetch("http://10.0.2.2:3333/api/1.0.0/user", {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(to_send)
+  })
+  .then((response) => {
+    if(response.ok){
+    Alert.alert("Account created! Use your credentials to login.");
+    navigation.navigate("Login")
+   }
+   else {
+
+     Alert.alert("Something went wrong")
+   }
+  })
+
+  .catch((error) => {
+    console.log(error);
+  })
+}
 
 
-  onLogin() {
-    const { email, password } = this.state;
 
-    Alert.alert('Credentials', `email: ${email} + password: ${password}`);
-  }
+
 
   render() {
-const  navigation = this.props.navigation;
+
     return (
       <>
       <View style={styles.container}>
@@ -51,17 +78,17 @@ const  navigation = this.props.navigation;
           style={styles.input}
         />
         <TextInput
-          value={this.state.Name}
+          value={this.state.first_name}
           keyboardType = 'default'
-          onChangeText={(Name) => this.setState({ Name })}
+          onChangeText={(first_name) => this.setState({ first_name})}
           placeholder='Name'
           placeholderTextColor = 'black'
           style={styles.input}
         />
         <TextInput
-          value={this.state.Surname}
+          value={this.state.last_name}
           keyboardType = 'default'
-          onChangeText={(Surname) => this.setState({ Surname })}
+          onChangeText={(last_name) => this.setState({ last_name })}
           placeholder='Surname'
           placeholderTextColor = 'black'
           style={styles.input}
@@ -78,7 +105,10 @@ const  navigation = this.props.navigation;
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('App')}
+          onPress={() =>this.addUser()
+                        //navigation.navigate('Home')
+
+        }
        >
          <Text style={styles.buttonText}> Sign Up </Text>
        </TouchableOpacity>
