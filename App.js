@@ -8,7 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Login from './Login';
 import SignUp from './signUp';
 import { createStackNavigator } from '@react-navigation/stack';
-import Get from './Get';
+import UserProfile from './User';
 
 
 const Stack = createStackNavigator();
@@ -34,13 +34,6 @@ function Feed() {
   );
 }
 
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile!</Text>
-    </View>
-  );
-}
 
 function Notifications() {
   return (
@@ -61,7 +54,7 @@ function MyTabs() {
     >
       <Tab.Screen
         name="Feed"
-        component={Get}
+        component={Feed}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -81,7 +74,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={UserProfile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

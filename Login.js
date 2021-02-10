@@ -43,8 +43,7 @@ export default class Login extends Component {
 
           key = responseJson.token;
           id = responseJson.id;
-          console.log(key)
-          console.log(id)
+        
          navigation.navigate('Home')
       })
       .catch((error) => {
