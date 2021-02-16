@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator, FlatList, Button,SafeAreaView,StyleSheet,TouchableOpacity,Alert,TextInput } from 'react-native';
+import { View, Text, ActivityIndicator, FlatList, Button,SafeAreaView,StyleSheet,TouchableOpacity,Alert,TextInput,ScrollView } from 'react-native';
 import Login from "./Login";
 import App from "./App";
 
@@ -131,7 +131,11 @@ class UserProfile extends Component{
     }
     else{
       return (
-    <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+        <Text style={styles.titleText}>
+        User Profile :
+        </Text>
+    <ScrollView>
         <Text>
          {JSON.stringify(this.state.userInfo,null,2)}
         </Text>
@@ -187,7 +191,8 @@ class UserProfile extends Component{
      >
        <Text style={styles.buttonText}> Update </Text>
      </TouchableOpacity>
-    </View>
+    </ScrollView>
+    </SafeAreaView>
       );
     }
 

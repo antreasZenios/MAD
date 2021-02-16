@@ -18,7 +18,7 @@ export default class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      key:'',
+
     };
 
 }
@@ -43,7 +43,7 @@ export default class Login extends Component {
 
           key = responseJson.token;
           id = responseJson.id;
-        
+
          navigation.navigate('Home')
       })
       .catch((error) => {
