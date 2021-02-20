@@ -13,7 +13,7 @@ export default class Locations extends Component {
     super(props);
 
     this.state = {
-      isLoading:true,
+    isLoading:true,
     locationList:[],
     reviews:[]
     };
@@ -40,8 +40,98 @@ export default class Locations extends Component {
 
   GetFlatListItem (item) {
 
-    Alert.alert(JSON.stringify(item.location_id));
 
+    favouriteLoc= () => {
+      return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+item.location_id+"/favourite",{
+        method:'post',
+        headers:{
+        'X-Authorization':key
+      },
+    })
+    .then((response) => {
+      if(response.ok){
+
+          Alert.alert("You have favourite this location !");
+      }})
+      .catch((error) => {
+          console.log(error);
+      }
+      );
+    }
+
+
+    unfavouriteLoc= () => {
+      return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+item.location_id+"/favourite",{
+        method:'delete',
+        headers:{
+        'X-Authorization':key
+      },
+    })
+    .then((response) => {
+      if(response.ok){
+
+          Alert.alert("You have unfavourite this location !");
+      }
+    }
+  )
+      .catch((error) => {
+          console.log(error);
+      }
+      );
+    }
+
+
+
+    getLocationInfo = () => {
+      return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+item.location_id,{
+        method:'get',
+        headers:{
+        'X-Authorization':key
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+          this.setState({
+
+              Location_info : responseJson
+
+          })
+
+          Alert.alert(JSON.stringify(this.state.Location_info));
+      })
+      .catch((error) => {
+          console.log(error);
+      }
+      );
+    }
+    Alert.alert(
+      'Manage this Location',
+     'You can get information regarding this location, Favourite and Unfavourite the location',
+      [
+        {
+          text: 'Get Location Info',
+          onPress: () => getLocationInfo(),
+
+
+        },
+        {
+          text: 'Favourite',
+          onPress: () => favouriteLoc(),
+
+
+        },
+        {
+          text: 'Unfavourite',
+          onPress: () => unfavouriteLoc(),
+
+
+        },
+        {
+          text: 'Cancel',
+          style : 'cancel'
+        }
+      ]
+    );
     }
 
 
@@ -57,12 +147,13 @@ export default class Locations extends Component {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-        reviews = responseJson.location_reviews
+
         this.setState({
             isLoading:false,
             reviews : responseJson.location_reviews,
             locationList: responseJson
         })
+
 
     })
     .catch((error) => {
@@ -75,10 +166,10 @@ export default class Locations extends Component {
   render(){
     if(this.state.isLoading){
       return(
-        <View>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <ActivityIndicator
             size="large"
-            color="#00ff00"
+            color="#000000"
           />
         </View>
       );
@@ -88,6 +179,7 @@ export default class Locations extends Component {
             <SafeAreaView style={styles.container}>
             <Text style={styles.titleText}>
             Locations :
+
             </Text>
 
             <FlatList
@@ -98,11 +190,13 @@ export default class Locations extends Component {
           ItemSeparatorComponent = {this.FlatListItemSeparator}
 
           renderItem={({item}) => <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)} >
-           {item.location_name} {item.location_town} Overall Rating :
+            {item.location_name} {item.location_town} Overall Rating
            {item.avg_overall_rating}    Price Rating:
            {item.avg_price_rating}    Quality Rating :
            {item.avg_quality_rating}  Clenliness Rating:
-           {item.avg_clenliness_rating}   </Text>}
+           {item.avg_clenliness_rating}      Reviews :          {JSON.stringify(item.location_reviews)}  </Text>}
+
+
 
           keyExtractor={(item, index) => index.toString()}
 
@@ -119,19 +213,12 @@ export default class Locations extends Component {
 
   const styles = StyleSheet.create({
 
-MainContainer :{
 
-justifyContent: 'center',
-flex:1,
-margin: 10,
-paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-
-},
 
 FlatListItemStyle: {
     padding: 10,
     fontSize: 18,
-    height: 100,
+    height: 500,
   },
 
     container: {

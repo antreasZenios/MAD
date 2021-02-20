@@ -7,8 +7,6 @@ import SignUp from './signUp';
 
 
 
-
-
 export default class Login extends Component {
 
   constructor(props){

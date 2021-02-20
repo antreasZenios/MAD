@@ -87,7 +87,7 @@ export default class Review extends Component {
 
     };
 
-    return fetch("http://10.0.2.2:3333/api/1.0.0/location/2/review/2", {
+    return fetch("http://10.0.2.2:3333/api/1.0.0/location/1/review/9", {
       method: 'patch',
       headers: {
         'Content-Type': 'application/json',

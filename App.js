@@ -64,7 +64,7 @@ function MyTabs() {
         name="Feed"
         component={MyDrawer}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Locations',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={'black'} size={26} />
           ),
@@ -74,9 +74,9 @@ function MyTabs() {
         name="Notifications"
         component={Notifications}
         options={{
-          tabBarLabel: 'Updates',
+          tabBarLabel: 'Reviews',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={'black'} size={26} />
+            <MaterialCommunityIcons name="comment" color={'black'} size={26} />
           ),
         }}
       />

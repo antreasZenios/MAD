@@ -17,6 +17,9 @@ class UserProfile extends Component{
       first_name:"",
       last_name:"",
       password:"",
+      First_Name:"",
+      Last_Name:"",
+      Email:""
     };
   }
 
@@ -105,10 +108,13 @@ class UserProfile extends Component{
 
         this.setState({
             isLoading: false,
-            userInfo: responseJson
+            userInfo: responseJson,
+            First_Name:responseJson.first_name,
+            Last_Name:responseJson.last_name,
+            Email:responseJson.email
         })
-
     })
+
     .catch((error) => {
         console.log(error);
     });
@@ -135,9 +141,10 @@ class UserProfile extends Component{
         <Text style={styles.titleText}>
         User Profile :
         </Text>
-    <ScrollView>
-        <Text>
-         {JSON.stringify(this.state.userInfo,null,2)}
+
+        <Text style={styles.titleText}>
+      First Name :  {this.state.First_Name}           Last Name :  {this.state.Last_Name}            Email : {this.state.Email}
+
         </Text>
 
     <TouchableOpacity
@@ -191,7 +198,7 @@ class UserProfile extends Component{
      >
        <Text style={styles.buttonText}> Update </Text>
      </TouchableOpacity>
-    </ScrollView>
+
     </SafeAreaView>
       );
     }
@@ -204,7 +211,7 @@ class UserProfile extends Component{
 export default UserProfile;
 const styles = StyleSheet.create({
   container: {
-    flex: 4,
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'space-evenly',
     backgroundColor: 'lightcoral',
@@ -214,6 +221,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    padding:20,
+    height:100
   },
   button: {
     alignItems: 'center',
@@ -232,12 +241,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonText2:{
-    fontFamily: 'Baskerville',
-    fontSize: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
   input: {
     width: 300,
     fontFamily: 'Baskerville',
