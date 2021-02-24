@@ -142,7 +142,7 @@ class UserProfile extends Component{
         User Profile :
         </Text>
 
-        <Text style={styles.titleText}>
+        <Text >
       First Name :  {this.state.First_Name}           Last Name :  {this.state.Last_Name}            Email : {this.state.Email}
 
         </Text>
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   },
   titleText:{
     fontFamily: 'Georgia',
-    fontSize: 20,
+    fontSize: 30,
     alignItems: 'center',
     justifyContent: 'center',
     padding:20,

@@ -4,20 +4,24 @@ import PropTypes from 'prop-types';
 import { Alert, Button, Text, TouchableOpacity, TextInput, View,SafeAreaView,ScrollView,StyleSheet,ActivityIndicator,FlatList } from 'react-native';
 import App from './App';
 import Dialog from "react-native-dialog";
-
+import ReviewsDisplay from "./ReviewsDisplay";
 
 export default class Locations extends Component {
 
 
   constructor(props){
     super(props);
-
+global.locID="1";
     this.state = {
     isLoading:true,
     locationList:[],
-    reviews:[]
+
     };
   }
+
+
+
+
 
   componentDidMount(){
     this.getLocations();
@@ -39,8 +43,8 @@ export default class Locations extends Component {
 
 
   GetFlatListItem (item) {
-
-
+ locID=item.location_id;
+const navigation=this.props.navigation;
     favouriteLoc= () => {
       return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+item.location_id+"/favourite",{
         method:'post',
@@ -82,35 +86,20 @@ export default class Locations extends Component {
 
 
 
-    getLocationInfo = () => {
-      return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+item.location_id,{
-        method:'get',
-        headers:{
-        'X-Authorization':key
-      },
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-          this.setState({
+    gotoReviews = () => {
 
-              Location_info : responseJson
-
-          })
-
-          Alert.alert(JSON.stringify(this.state.Location_info));
-      })
-      .catch((error) => {
-          console.log(error);
+          navigation.navigate('Notifications')
+          console.log(locID)
+          //this.getReviews();
       }
-      );
-    }
+
     Alert.alert(
       'Manage this Location',
-     'You can get information regarding this location, Favourite and Unfavourite the location',
+     'You can get all the reviews regarding this location, Favourite and Unfavourite the location',
       [
         {
-          text: 'Get Location Info',
-          onPress: () => getLocationInfo(),
+          text: 'See Reviews',
+          onPress: () => gotoReviews(),
 
 
         },
@@ -126,10 +115,6 @@ export default class Locations extends Component {
 
 
         },
-        {
-          text: 'Cancel',
-          style : 'cancel'
-        }
       ]
     );
     }
@@ -150,12 +135,14 @@ export default class Locations extends Component {
 
         this.setState({
             isLoading:false,
-            reviews : responseJson.location_reviews,
-            locationList: responseJson
+            locationList: responseJson,
+
         })
 
 
+
     })
+
     .catch((error) => {
         console.log(error);
     });
@@ -175,6 +162,7 @@ export default class Locations extends Component {
       );
     }
     else{
+
         return (
             <SafeAreaView style={styles.container}>
             <Text style={styles.titleText}>
@@ -185,16 +173,16 @@ export default class Locations extends Component {
             <FlatList
 
 
-          data={ this.state.locationList }
+          data={ this.state.locationList  }
 
           ItemSeparatorComponent = {this.FlatListItemSeparator}
 
           renderItem={({item}) => <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)} >
-            {item.location_name} {item.location_town} Overall Rating
+           {item.location_name} {item.location_town} Overall Rating
            {item.avg_overall_rating}    Price Rating:
            {item.avg_price_rating}    Quality Rating :
            {item.avg_quality_rating}  Clenliness Rating:
-           {item.avg_clenliness_rating}      Reviews :          {JSON.stringify(item.location_reviews)}  </Text>}
+           {item.avg_clenliness_rating}            </Text>}
 
 
 
@@ -218,7 +206,7 @@ export default class Locations extends Component {
 FlatListItemStyle: {
     padding: 10,
     fontSize: 18,
-    height: 500,
+    height: 200,
   },
 
     container: {
@@ -230,7 +218,7 @@ FlatListItemStyle: {
     },
     titleText:{
       fontFamily: 'Georgia',
-      fontSize: 20,
+      fontSize: 30,
       alignItems: 'center',
       justifyContent: 'center',
     },

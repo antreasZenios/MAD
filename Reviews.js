@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Button, Text, TouchableOpacity, TextInput, View,SafeAreaView,ScrollView,StyleSheet } from 'react-native';
+import { Alert, Button, Text, TouchableOpacity, TextInput, View,SafeAreaView,ScrollView,StyleSheet,FlatList } from 'react-native';
 import App from './App';
 import Locations from './Locations';
 
@@ -18,15 +18,23 @@ export default class Review extends Component {
       price_rating:"",
       quality_rating:"",
       clenliness_rating:"",
-      review_body:""
+      review_body:"",
+      reviews:[],
+      item:""
     };
+  }
+
+
+  componentDidMount(){
+    this.getReviews();
+
   }
 
   FlatListItemSeparator = () => {
     return (
       <View
         style={{
-          height: 1,
+          height: 10,
           width: "100%",
           backgroundColor: "#607D8B",
         }}
@@ -34,6 +42,10 @@ export default class Review extends Component {
     );
   }
 
+  GetFlatListItem(item)
+{
+  Alert.alert("WOW")
+}
 
 
 
@@ -73,6 +85,35 @@ export default class Review extends Component {
   }
 
 
+
+    getReviews = () => {
+      return fetch("http://10.0.2.2:3333/api/1.0.0/location/1",{
+        method:'get',
+        headers:{
+        'X-Authorization':key
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+          this.setState({
+              isLoading:false,
+              reviews: responseJson
+
+
+
+          })
+
+
+
+
+      })
+
+
+      .catch((error) => {
+          console.log(error);
+      });
+    }
 
 
 
@@ -126,7 +167,8 @@ render(){
 
   return(
 
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+<ScrollView>
     <Text style={styles.titleText}>Add a Review:</Text>
       <TextInput
         value={this.state.overall_rating}
@@ -181,7 +223,35 @@ render(){
     >
       <Text style={styles.buttonText}> Edit Review </Text>
     </TouchableOpacity>
-     </View>
+    <Text>
+    {JSON.stringify(this.state.reviews)}
+    </Text>
+</ScrollView>
+
+    <FlatList
+
+
+  data={ this.state.reviews  }
+
+  ItemSeparatorComponent = {this.FlatListItemSeparator}
+
+  renderItem={({item}) => <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)} >
+   {item.location_name} {item.location_town} Overall Rating
+   {item.avg_overall_rating}    Price Rating:
+   {item.avg_price_rating}    Quality Rating :
+   {item.avg_quality_rating}  Clenliness Rating:
+   {item.avg_clenliness_rating}    </Text>
+
+}
+
+
+  keyExtractor={(item, index) => index.toString()}
+
+
+     />
+
+    </SafeAreaView>
+
 
   )
 
@@ -192,11 +262,16 @@ render(){
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'space-evenly',
     backgroundColor: 'lightcoral',
   },
+  FlatListItemStyle: {
+      padding: 10,
+      fontSize: 18,
+      height: 500,
+    },
   titleText:{
     fontFamily: 'Georgia',
     fontSize: 30,

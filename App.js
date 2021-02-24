@@ -12,6 +12,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import UserProfile from './User';
 import Review from './Reviews';
 import Locations from './Locations';
+import ReviewsDisplay from './ReviewsDisplay';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -72,7 +73,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Notifications"
-        component={Notifications}
+        component={ReviewsDisplay}
         options={{
           tabBarLabel: 'Reviews',
           tabBarIcon: ({ color }) => (
