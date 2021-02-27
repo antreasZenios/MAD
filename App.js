@@ -43,14 +43,6 @@ function MyDrawer(){
 
 
 
-function Notifications() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Notifications!</Text>
-    </View>
-  );
-}
-
 const Tab = createMaterialBottomTabNavigator();
 
 function MyTabs() {
@@ -69,10 +61,12 @@ function MyTabs() {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={'black'} size={26} />
           ),
-        }}
+        }
+      }
+      
       />
       <Tab.Screen
-        name="Notifications"
+        name="Reviews"
         component={ReviewsDisplay}
         options={{
           tabBarLabel: 'Reviews',

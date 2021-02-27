@@ -45,6 +45,7 @@ global.locID="1";
   GetFlatListItem (item) {
  locID=item.location_id;
 const navigation=this.props.navigation;
+
     favouriteLoc= () => {
       return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+item.location_id+"/favourite",{
         method:'post',
@@ -88,9 +89,9 @@ const navigation=this.props.navigation;
 
     gotoReviews = () => {
 
-          navigation.navigate('Notifications')
-          console.log(locID)
-          //this.getReviews();
+          navigation.navigate('Reviews')
+
+
       }
 
     Alert.alert(
@@ -163,6 +164,7 @@ const navigation=this.props.navigation;
     }
     else{
 
+
         return (
             <SafeAreaView style={styles.container}>
             <Text style={styles.titleText}>
@@ -177,18 +179,19 @@ const navigation=this.props.navigation;
 
           ItemSeparatorComponent = {this.FlatListItemSeparator}
 
-          renderItem={({item}) => <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)} >
-           {item.location_name} {item.location_town} Overall Rating
-           {item.avg_overall_rating}    Price Rating:
-           {item.avg_price_rating}    Quality Rating :
-           {item.avg_quality_rating}  Clenliness Rating:
-           {item.avg_clenliness_rating}            </Text>}
-
-
+          renderItem={({item}) =>
+           <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)}> Name: {item.location_name}
+           <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)}> Town : {item.location_town} </Text>
+           <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)}> Overall Rating : {item.avg_overall_rating} </Text>
+           <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)}> Price Rating: {item.avg_price_rating}  </Text>
+           <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)}> Quality Rating : {item.avg_quality_rating}  </Text>
+           <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)}> Clenliness Rating : {item.avg_clenliness_rating}   </Text>
+           </Text>
+         }
 
           keyExtractor={(item, index) => index.toString()}
 
-             />
+/>
               </SafeAreaView>
 
         );
@@ -204,8 +207,8 @@ const navigation=this.props.navigation;
 
 
 FlatListItemStyle: {
-    padding: 10,
-    fontSize: 18,
+    padding: 15,
+    fontSize: 25,
     height: 200,
   },
 

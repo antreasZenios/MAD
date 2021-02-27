@@ -25,10 +25,7 @@ export default class Review extends Component {
   }
 
 
-  componentDidMount(){
-    this.getReviews();
 
-  }
 
   FlatListItemSeparator = () => {
     return (
@@ -51,6 +48,7 @@ export default class Review extends Component {
 
   addReview = () => {
 
+const navigation=this.props.navigation;
     let to_send = {
       overall_rating: parseInt(this.state.overall_rating),
       price_rating: parseInt(this.state.price_rating),
@@ -60,7 +58,7 @@ export default class Review extends Component {
 
     };
 
-    return fetch("http://10.0.2.2:3333/api/1.0.0/location/1/review", {
+    return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review", {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -73,6 +71,7 @@ export default class Review extends Component {
       if(response.ok){
 
       Alert.alert("Review posted!");
+      navigation.navigate("Reviews");
      }
      else {
        Alert.alert("Something went wrong")
@@ -86,39 +85,11 @@ export default class Review extends Component {
 
 
 
-    getReviews = () => {
-      return fetch("http://10.0.2.2:3333/api/1.0.0/location/1",{
-        method:'get',
-        headers:{
-        'X-Authorization':key
-      },
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-
-          this.setState({
-              isLoading:false,
-              reviews: responseJson
-
-
-
-          })
-
-
-
-
-      })
-
-
-      .catch((error) => {
-          console.log(error);
-      });
-    }
 
 
 
   editReview = () => {
-
+   const navigation=this.props.navigation;
     let to_send = {
       overall_rating: parseInt(this.state.overall_rating),
       price_rating: parseInt(this.state.price_rating),
@@ -128,7 +99,7 @@ export default class Review extends Component {
 
     };
 
-    return fetch("http://10.0.2.2:3333/api/1.0.0/location/1/review/9", {
+    return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review/"+revID, {
       method: 'patch',
       headers: {
         'Content-Type': 'application/json',
@@ -141,6 +112,7 @@ export default class Review extends Component {
       if(response.ok){
 
       Alert.alert("Review updated!");
+        navigation.navigate("Reviews");
 
     }
      else {
@@ -168,8 +140,8 @@ render(){
   return(
 
     <SafeAreaView style={styles.container}>
-<ScrollView>
-    <Text style={styles.titleText}>Add a Review:</Text>
+
+    <Text style={styles.titleText}>Add or Edit a Review:</Text>
       <TextInput
         value={this.state.overall_rating}
         keyboardType = 'number-pad'
@@ -223,32 +195,7 @@ render(){
     >
       <Text style={styles.buttonText}> Edit Review </Text>
     </TouchableOpacity>
-    <Text>
-    {JSON.stringify(this.state.reviews)}
-    </Text>
-</ScrollView>
 
-    <FlatList
-
-
-  data={ this.state.reviews  }
-
-  ItemSeparatorComponent = {this.FlatListItemSeparator}
-
-  renderItem={({item}) => <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item)} >
-   {item.location_name} {item.location_town} Overall Rating
-   {item.avg_overall_rating}    Price Rating:
-   {item.avg_price_rating}    Quality Rating :
-   {item.avg_quality_rating}  Clenliness Rating:
-   {item.avg_clenliness_rating}    </Text>
-
-}
-
-
-  keyExtractor={(item, index) => index.toString()}
-
-
-     />
 
     </SafeAreaView>
 

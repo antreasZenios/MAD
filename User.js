@@ -142,10 +142,12 @@ class UserProfile extends Component{
         User Profile :
         </Text>
 
-        <Text >
-      First Name :  {this.state.First_Name}           Last Name :  {this.state.Last_Name}            Email : {this.state.Email}
+          <Text style={styles.infoText}>First Name :  {this.state.First_Name}</Text>
+          <Text style={styles.infoText}>Last Name :  {this.state.Last_Name}</Text>
+          <Text style={styles.infoText}>Email : {this.state.Email}</Text>
 
-        </Text>
+
+
 
     <TouchableOpacity
       style={styles.button}
@@ -223,6 +225,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding:20,
     height:100
+  },
+  infoText:{
+    fontFamily: 'Georgia',
+    fontSize: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding:20,
+    height:70
   },
   button: {
     alignItems: 'center',
