@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, FlatList, Button,SafeAreaView,StyleSheet,TouchableOpacity,Alert,TextInput,ScrollView } from 'react-native';
 import Login from "./Login";
 import App from "./App";
-
+import {styles} from "./StyleSheet";
 
 
 
@@ -211,55 +211,3 @@ class UserProfile extends Component{
 }
 
 export default UserProfile;
-const styles = StyleSheet.create({
-  container: {
-    flex: 3,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    backgroundColor: 'lightcoral',
-  },
-  titleText:{
-    fontFamily: 'Georgia',
-    fontSize: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding:20,
-    height:100
-  },
-  infoText:{
-    fontFamily: 'Georgia',
-    fontSize: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding:20,
-    height:70
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: 'lightcyan',
-    width: 250,
-    height: 50,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 25,
-    marginBottom: 10,
-  },
-  buttonText:{
-    fontFamily: 'Baskerville',
-    fontSize: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  input: {
-    width: 300,
-    fontFamily: 'Baskerville',
-    fontSize: 20,
-    height: 50,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'black',
-    marginVertical: 10,
-  },
-});

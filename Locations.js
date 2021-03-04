@@ -5,13 +5,15 @@ import { Alert, Button, Text, TouchableOpacity, TextInput, View,SafeAreaView,Scr
 import App from './App';
 import Dialog from "react-native-dialog";
 import ReviewsDisplay from "./ReviewsDisplay";
+import {styles} from "./StyleSheet";
+
 
 export default class Locations extends Component {
 
 
   constructor(props){
     super(props);
-global.locID="1";
+   global.locID="1";
     this.state = {
     isLoading:true,
     locationList:[],
@@ -199,63 +201,3 @@ const navigation=this.props.navigation;
     }
 
   }
-
-
-
-  const styles = StyleSheet.create({
-
-
-
-FlatListItemStyle: {
-    padding: 15,
-    fontSize: 25,
-    height: 200,
-  },
-
-    container: {
-      flex: 2,
-      alignItems: 'center',
-      justifyContent: 'space-evenly',
-      backgroundColor: 'lightcoral',
-
-    },
-    titleText:{
-      fontFamily: 'Georgia',
-      fontSize: 30,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    button: {
-      alignItems: 'center',
-      backgroundColor: 'lightcyan',
-      width: 250,
-      height: 50,
-      padding: 10,
-      borderWidth: 1,
-      borderColor: 'white',
-      borderRadius: 25,
-      marginBottom: 10,
-    },
-    buttonText:{
-      fontFamily: 'Baskerville',
-      fontSize: 25,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    buttonText2:{
-      fontFamily: 'Baskerville',
-      fontSize: 25,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    input: {
-      width: 300,
-      fontFamily: 'Baskerville',
-      fontSize: 20,
-      height: 50,
-      padding: 10,
-      borderWidth: 1,
-      borderColor: 'black',
-      marginVertical: 10,
-    },
-  });

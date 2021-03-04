@@ -13,7 +13,7 @@ import UserProfile from './User';
 import Review from './Reviews';
 import Locations from './Locations';
 import ReviewsDisplay from './ReviewsDisplay';
-
+import Camera from './camera';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -63,7 +63,7 @@ function MyTabs() {
           ),
         }
       }
-      
+
       />
       <Tab.Screen
         name="Reviews"
@@ -72,6 +72,16 @@ function MyTabs() {
           tabBarLabel: 'Reviews',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="comment" color={'black'} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Camera"
+        component={Camera}
+        options={{
+          tabBarLabel: 'Camera',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="camera" color={'black'} size={26} />
           ),
         }}
       />

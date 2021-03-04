@@ -1,10 +1,12 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ActivityIndicator, Alert, Button, Text, TouchableOpacity, TextInput, View,SafeAreaView,ScrollView,StyleSheet,FlatList } from 'react-native';
+import { ActivityIndicator, Alert, Button, Text, TouchableOpacity, TextInput, View,SafeAreaView,ScrollView,StyleSheet,FlatList,Image } from 'react-native';
 import App from './App';
 import Locations from './Locations';
-
+import { RNCamera } from 'react-native-camera';
+import {styles} from "./StyleSheet";
+import Camera from './camera';
 
 export default class ReviewsDisplay extends Component {
 
@@ -15,20 +17,20 @@ export default class ReviewsDisplay extends Component {
     super(props);
 
 
-    global.revID="";
+    global.revID="8";
+    global.cameraID="";
     this.state = {
       isLoading: true,
       review:"",
+      photo:[]
     };
   }
 
 
 
-  componentDidMount(){
-    this.getReviews();
-  }
+
   UNSAFE_componentWillMount(){
-    this.getReviews();
+
      this.props.navigation.addListener('focus', () => {this.getReviews()})
   }
 
@@ -88,7 +90,8 @@ export default class ReviewsDisplay extends Component {
 
       },
       {
-        text:'Cancel'
+        text:'Take a picture',
+        onPress: () => navigation.navigate("Camera"),
       }
     ]
   )
@@ -111,7 +114,6 @@ export default class ReviewsDisplay extends Component {
 
           this.setState({
               isLoading:false,
-              place: responseJson.location_name,
               review:responseJson.location_reviews
           })
 
@@ -163,6 +165,30 @@ export default class ReviewsDisplay extends Component {
 
 
 
+    deletePhotoReview= (id) => {
+      return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review/"+id+"/photo",{
+        method:'delete',
+        headers:{
+        'X-Authorization':key,
+      },
+    })
+    .then((response) => {
+      if(response.ok){
+
+          Alert.alert("Photo deleted !");
+
+      }
+      this.getReviews();
+    })
+      .catch((error) => {
+          console.log(error);
+      }
+      );
+    }
+
+
+
+
 
 render(){
   if(this.state.isLoading){
@@ -201,7 +227,7 @@ const navigation=this.props.navigation;
      Overall Rating :
    {item.overall_rating}    Price Rating :
    {item.price_rating}    Quality Rating :
-   {item.quality_rating}  Clenliness Rating :
+   {item.quality_rating}  Cleanliness Rating :
    {item.clenliness_rating}  Likes:
    {item.likes}   Review :
    {item.review_body}   </Text>
@@ -217,6 +243,21 @@ const navigation=this.props.navigation;
   <Text style={styles.buttonText2}> Unlike </Text>
 
    </TouchableOpacity>
+
+   <TouchableOpacity style={styles.likeButton}
+   onPress={() =>this.deletePhotoReview(item.review_id) }
+ >
+  <Text style={styles.buttonText2}>Delete a Photo </Text>
+
+   </TouchableOpacity>
+
+   <View>
+   <Image
+   style={{width:150, height:200}}
+   source={{uri:"http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review/"+item.review_id+"/photo"}}
+   />
+   </View>
+
 </View>
 }
 
@@ -231,76 +272,12 @@ const navigation=this.props.navigation;
       <Text style={styles.buttonText}> Add Review </Text>
      </TouchableOpacity>
 
-    </SafeAreaView>
 
+
+    </SafeAreaView>
 
   )
 
 }
 
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 2,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    backgroundColor: 'lightcoral',
-  },
-  FlatListItemStyle: {
-      padding: 15,
-      fontSize: 25,
-      height: 200,
-    },
-  titleText:{
-    fontFamily: 'Georgia',
-    fontSize: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: 'lightcyan',
-    width: 300,
-    height: 60,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 25,
-    marginBottom: 10,
-  },
-  likeButton: {
-    alignItems: 'center',
-    backgroundColor: 'lightcyan',
-    width: 150,
-    height: 30,
-    padding: 5,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 25,
-    marginBottom: 10,
-  },
-  buttonText:{
-    fontFamily: 'Baskerville',
-    fontSize: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText2:{
-    fontFamily: 'Baskerville',
-    fontSize: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    width: 300,
-    fontFamily: 'Baskerville',
-    fontSize: 20,
-    height: 50,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'black',
-    marginVertical: 10,
-  },
-});

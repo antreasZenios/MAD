@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   buttonText2:{
     fontFamily: 'Baskerville',
-    fontSize: 25,
+    fontSize: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -46,4 +46,33 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     marginVertical: 10,
   },
+
+  FlatListItemStyle: {
+      padding: 15,
+      fontSize: 25,
+      height: 200,
+    },
+    infoText:{
+      fontFamily: 'Georgia',
+      fontSize: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding:20,
+      height:70
+    },
+    likeButton: {
+      alignItems: 'center',
+      backgroundColor: 'lightcyan',
+      width: 150,
+      height: 30,
+      padding: 5,
+      borderWidth: 1,
+      borderColor: 'white',
+      borderRadius: 25,
+      marginBottom: 10,
+    },
 });
+
+
+
+export {styles}
