@@ -11,15 +11,19 @@ export default class Login extends Component {
 
   constructor(props){
     super(props);
+    //Declaring global variables:
     global.key = "";
     global.id = "";
+
+    //Declaring variables that our used in this class and can change state
     this.state = {
       email: '',
       password: '',
-
     };
-
 }
+
+
+//POST request to login a user based on Email and password authentication
     loginUser = () => {
       const navigation=this.props.navigation;
       let to_send = {
@@ -39,6 +43,7 @@ export default class Login extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
 
+// Save authentication token and User id from Json response for future use
           key = responseJson.token;
           id = responseJson.id;
 
@@ -57,7 +62,7 @@ export default class Login extends Component {
     const navigation= this.props.navigation;
     return (
 
-
+//Create a view with text inputs of email and password that has 2 buttons one for log in and one for navigation to signup page
 
       <View style={styles.container}>
       <Text style={styles.titleText}>Welcome !</Text>

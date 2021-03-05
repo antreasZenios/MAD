@@ -13,10 +13,15 @@ import UserProfile from './User';
 import Review from './Reviews';
 import Locations from './Locations';
 import ReviewsDisplay from './ReviewsDisplay';
-import Camera from './camera';
+import Camera from './camera.js';
+
+
+//declaring a Stack , Drawer and a BottomTab navigation
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
+// Stack navigation function with 3 screens 1(Login Page)  2(SignUp page)  3(BottomTabnavigator)
 function MyStack() {
   return (
     <NavigationContainer>
@@ -29,6 +34,7 @@ function MyStack() {
   );
 }
 
+// Drawer navigation function that with 2 screens the Locations and the Add or Edit Reviews page
 function MyDrawer(){
 
   return(
@@ -42,9 +48,7 @@ function MyDrawer(){
 }
 
 
-
-const Tab = createMaterialBottomTabNavigator();
-
+// Bottom Tab navigator with 4 Screens. 1(Drawer Navigation)  2(Reviews page)  3(Camera) 4(User Profile page)
 function MyTabs() {
   return (
 

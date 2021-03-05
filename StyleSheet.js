@@ -1,5 +1,5 @@
 import { Alert, Button, Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native';
-
+// This is the Stylesheet of the project and it is used throughout the App
 const styles = StyleSheet.create({
   container: {
     flex: 3,

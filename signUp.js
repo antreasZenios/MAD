@@ -4,7 +4,7 @@ import { Alert, Button, Text, TouchableOpacity, TextInput, View,StyleSheet } fro
 //import {styles} from './styleSheet';
 import App from './App';
 import Login from './Login';
-
+import {styles} from "./StyleSheet";
 
 
 
@@ -15,21 +15,21 @@ export default class SignUp extends Component {
   constructor(props){
     super(props);
 
+//Declaring variables that our used in this class and can change state
     this.state = {
       email: '',
       password: '',
       first_name:'',
       last_name:'',
     };
-
-//const  navigation = this.props.navigation;
 }
 
 
+// POST request to add a new user to the database
 addUser = () => {
   const  navigation = this.props.navigation;
   let to_send = {
-    first_name: (this.state.first_name),
+    first_name: this.state.first_name,
     last_name: this.state.last_name,
     email: this.state.email,
     password: this.state.password,
@@ -64,7 +64,7 @@ addUser = () => {
 
 
   render() {
-
+//Create a view with text inputs of email and password first name and last name  and a button to send the request and create the new user
     return (
       <>
       <View style={styles.container}>
@@ -106,7 +106,6 @@ addUser = () => {
         <TouchableOpacity
           style={styles.button}
           onPress={() =>this.addUser()
-                        //navigation.navigate('Home')
 
         }
        >
@@ -119,44 +118,3 @@ addUser = () => {
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 3,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    backgroundColor: 'lightcoral',
-  },
-  titleText:{
-    fontFamily: 'Georgia',
-    fontSize: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: 'lightcyan',
-    width: 300,
-    height: 60,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 25,
-    marginBottom: 10,
-  },
-  buttonText:{
-    fontFamily: 'Baskerville',
-    fontSize: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    width: 300,
-    fontFamily: 'Baskerville',
-    fontSize: 20,
-    height: 50,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'black',
-    marginVertical: 10,
-  },
-});

@@ -11,9 +11,12 @@ import {styles} from "./StyleSheet";
 export default class Locations extends Component {
 
 
+
   constructor(props){
     super(props);
-   global.locID="1";
+     //Declaring global variables:
+    global.locID="1";
+    //Declaring variables that our used in this class and can change state
     this.state = {
     isLoading:true,
     locationList:[],
@@ -22,14 +25,13 @@ export default class Locations extends Component {
   }
 
 
-
-
-
+//call getLocations function as soon as the screen opens and for refresh purpose
   componentDidMount(){
     this.getLocations();
 
   }
 
+// Create a separator to be used in FlatList
   FlatListItemSeparator = () => {
     return (
       <View
@@ -44,57 +46,66 @@ export default class Locations extends Component {
 
 
 
+//Post request to favourite a Location
+  favouriteLoc= () => {
+    return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/favourite",{
+      method:'post',
+      headers:{
+      'X-Authorization':key
+    },
+  })
+  .then((response) => {
+    if(response.ok){
+
+        Alert.alert("You have favourite this location !");
+    }})
+    .catch((error) => {
+        console.log(error);
+    }
+    );
+  }
+
+
+
+// Delete request to unfavourite a location
+  unfavouriteLoc= () => {
+    return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/favourite",{
+      method:'delete',
+      headers:{
+      'X-Authorization':key
+    },
+  })
+  .then((response) => {
+    if(response.ok){
+
+        Alert.alert("You have unfavourite this location !");
+    }
+  }
+)
+    .catch((error) => {
+        console.log(error);
+    }
+    );
+  }
+
+
+//Function to navigate to Reviews screen so that the user can add and edit a review
+  gotoReviews = () => {
+
+        const navigation=this.props.navigation;
+        navigation.navigate('Reviews')
+
+
+    }
+
+
+
+// Function that is triggered when an item of the flatlist is pressed and gives a user some options
   GetFlatListItem (item) {
  locID=item.location_id;
-const navigation=this.props.navigation;
-
-    favouriteLoc= () => {
-      return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+item.location_id+"/favourite",{
-        method:'post',
-        headers:{
-        'X-Authorization':key
-      },
-    })
-    .then((response) => {
-      if(response.ok){
-
-          Alert.alert("You have favourite this location !");
-      }})
-      .catch((error) => {
-          console.log(error);
-      }
-      );
-    }
-
-
-    unfavouriteLoc= () => {
-      return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+item.location_id+"/favourite",{
-        method:'delete',
-        headers:{
-        'X-Authorization':key
-      },
-    })
-    .then((response) => {
-      if(response.ok){
-
-          Alert.alert("You have unfavourite this location !");
-      }
-    }
-  )
-      .catch((error) => {
-          console.log(error);
-      }
-      );
-    }
 
 
 
-    gotoReviews = () => {
-
-          navigation.navigate('Reviews')
-
-
-      }
 
     Alert.alert(
       'Manage this Location',
@@ -102,19 +113,19 @@ const navigation=this.props.navigation;
       [
         {
           text: 'See Reviews',
-          onPress: () => gotoReviews(),
+          onPress: () => this.gotoReviews(),
 
 
         },
         {
           text: 'Favourite',
-          onPress: () => favouriteLoc(),
+          onPress: () => this.favouriteLoc(),
 
 
         },
         {
           text: 'Unfavourite',
-          onPress: () => unfavouriteLoc(),
+          onPress: () => this.unfavouriteLoc(),
 
 
         },
@@ -125,7 +136,7 @@ const navigation=this.props.navigation;
 
 
 
-
+// Get request to get all the locations and then render them in a flatlist
   getLocations = () => {
     return fetch("http://10.0.2.2:3333/api/1.0.0/find",{
       method:'get',
@@ -154,6 +165,7 @@ const navigation=this.props.navigation;
 
 
   render(){
+    // create a loading indicator untill the get request for Locations is finished and flatlist is rendered
     if(this.state.isLoading){
       return(
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -166,8 +178,8 @@ const navigation=this.props.navigation;
     }
     else{
 
-
         return (
+          // create a View where the locations are available through a flatlist for edit and interaction
             <SafeAreaView style={styles.container}>
             <Text style={styles.titleText}>
             Locations :

@@ -11,7 +11,7 @@ export default class Review extends Component {
 
   constructor(props){
     super(props);
-
+//Declaring variables that our used in this class and can change state
     this.state = {
       isLoading: true,
       overall_rating:"",
@@ -19,36 +19,22 @@ export default class Review extends Component {
       quality_rating:"",
       clenliness_rating:"",
       review_body:"",
-      reviews:[],
-      item:""
+
     };
   }
 
 
 
 
-  FlatListItemSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 10,
-          width: "100%",
-          backgroundColor: "#607D8B",
-        }}
-      />
-    );
-  }
-
-  GetFlatListItem(item)
-{
-  Alert.alert("WOW")
-}
 
 
 
+
+// Post request to add a new review that has filter where mentions of
+//tea , cakes and pastries are not allowed to be entered in the body of the review
   addReview = () => {
 
-const navigation=this.props.navigation;
+   const navigation=this.props.navigation;
     let to_send = {
       overall_rating: parseInt(this.state.overall_rating),
       price_rating: parseInt(this.state.price_rating),
@@ -57,6 +43,12 @@ const navigation=this.props.navigation;
       review_body: this.state.review_body,
 
     };
+//extension task:
+    if(this.state.review_body.includes('tea') || this.state.review_body.includes('cakes') ||this.state.review_body.includes('pastries') ){
+      navigation.navigate("Reviews")
+      Alert.alert("You are not allowed to comment on anything else except your coffee!")
+      return;
+    }
 
     return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review", {
       method: 'post',
@@ -87,7 +79,8 @@ const navigation=this.props.navigation;
 
 
 
-
+// Patch request to edit an existing review that has filter where mentions of
+//tea , cakes and pastries are not allowed to be entered in the body of the review
   editReview = () => {
    const navigation=this.props.navigation;
     let to_send = {
@@ -98,6 +91,13 @@ const navigation=this.props.navigation;
       review_body: this.state.review_body,
 
     };
+
+//extension task:
+    if(this.state.review_body.includes('tea') || this.state.review_body.includes('cakes') ||this.state.review_body.includes('pastries') ){
+      navigation.navigate("Reviews")
+      Alert.alert("You are not allowed to comment on anything else except your coffee!")
+      return;
+    }
 
     return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review/"+revID, {
       method: 'patch',
@@ -129,16 +129,11 @@ const navigation=this.props.navigation;
 
 
 
-
-
-
-
-
 render(){
 
 
   return(
-
+// Create a view with a text inputs where the user can fill in and can edit or add a review with the appropriate buttons
     <SafeAreaView style={styles.container}>
 
     <Text style={styles.titleText}>Add or Edit a Review:</Text>

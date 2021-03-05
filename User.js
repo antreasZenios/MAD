@@ -9,7 +9,7 @@ import {styles} from "./StyleSheet";
 class UserProfile extends Component{
   constructor(props){
     super(props);
-
+//Declaring variables that our used in this class and can change state
     this.state = {
       isLoading: true,
       userInfo:[],
@@ -23,7 +23,7 @@ class UserProfile extends Component{
     };
   }
 
-
+//call getData function as soon as the screen opens and for refresh purpose
   componentDidMount(){
     this.getData();
   }
@@ -32,7 +32,7 @@ class UserProfile extends Component{
 
 
 
-
+// Post request to logout a user
   userLogout = () => {
    const  navigation = this.props.navigation;
     return fetch("http://10.0.2.2:3333/api/1.0.0/user/logout",{
@@ -56,7 +56,7 @@ class UserProfile extends Component{
 
   }
 
-
+//Patch request to change the user Details
   updateUser = () => {
     const  navigation = this.props.navigation;
     let to_send = {
@@ -94,7 +94,7 @@ class UserProfile extends Component{
   }
 
 
-
+//get request to get all the user's data
   getData = () => {
 
     return fetch("http://10.0.2.2:3333/api/1.0.0/user/"+id,{
@@ -124,7 +124,7 @@ class UserProfile extends Component{
 
 
   render(){
-
+// create a loading indicator untill the get request for user's details is finished and info are rendered
     if(this.state.isLoading){
       return(
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -137,7 +137,9 @@ class UserProfile extends Component{
     }
     else{
       return (
+        // create a view that shows the user's details and input buttons to change any details of the user as well as logout
         <SafeAreaView style={styles.container}>
+        <ScrollView>
         <Text style={styles.titleText}>
         User Profile :
         </Text>
@@ -200,7 +202,7 @@ class UserProfile extends Component{
      >
        <Text style={styles.buttonText}> Update </Text>
      </TouchableOpacity>
-
+</ScrollView>
     </SafeAreaView>
       );
     }

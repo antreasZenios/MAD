@@ -17,8 +17,10 @@ export default class ReviewsDisplay extends Component {
     super(props);
 
 
-    global.revID="8";
+ //Declaring global variables:
+    global.revID="";
     global.cameraID="";
+  //Declaring variables that our used in this class and can change state
     this.state = {
       isLoading: true,
       review:"",
@@ -28,12 +30,13 @@ export default class ReviewsDisplay extends Component {
 
 
 
-
+//when the screen is focused we call getReviews function to render and refresh Reviews flatlist
   UNSAFE_componentWillMount(){
 
      this.props.navigation.addListener('focus', () => {this.getReviews()})
   }
 
+// Create a separator to be used in FlatList
   FlatListItemSeparator = () => {
     return (
       <View
@@ -46,14 +49,11 @@ export default class ReviewsDisplay extends Component {
     );
   }
 
-  GetFlatListItem(item)
-{
-  revID=item.review_id;
-  const navigation=this.props.navigation;
 
 
+//Delete request to delete a review from the database
   deleteReview= () => {
-    return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review/"+item.review_id,{
+    return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review/"+revID,{
       method:'delete',
       headers:{
       'X-Authorization':key
@@ -76,6 +76,14 @@ export default class ReviewsDisplay extends Component {
 
 
 
+
+// Function that is triggered when an item of the flatlist is pressed and gives a user some options to interact with the review and navigate to other screens
+  GetFlatListItem(item)
+{
+  revID=item.review_id;
+  const navigation=this.props.navigation;
+
+
   Alert.alert(
     'Manage this Review',
    'You can get all the reviews regarding this location, Favourite and Unfavourite the location',
@@ -86,7 +94,7 @@ export default class ReviewsDisplay extends Component {
       },
       {
         text:'Delete this review',
-        onPress: () => deleteReview(),
+        onPress: () => this.deleteReview(),
 
       },
       {
@@ -100,7 +108,7 @@ export default class ReviewsDisplay extends Component {
 
 
 
-
+// GET request to get the reviews and render them in a flatlist
     getReviews = () => {
 
       return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID,{
@@ -124,6 +132,8 @@ export default class ReviewsDisplay extends Component {
       });
     }
 
+
+// Post request to like a review
     likeReview= (id) => {
       return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review/"+id+"/like",{
         method:'post',
@@ -143,6 +153,8 @@ export default class ReviewsDisplay extends Component {
       );
     }
 
+
+// Delete request to remove a like from a review
     unlikeReview= (id) => {
       return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review/"+id+"/like",{
         method:'delete',
@@ -164,7 +176,7 @@ export default class ReviewsDisplay extends Component {
 
 
 
-
+// Delete request to remove a photo of a review from the database
     deletePhotoReview= (id) => {
       return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+locID+"/review/"+id+"/photo",{
         method:'delete',
@@ -191,6 +203,7 @@ export default class ReviewsDisplay extends Component {
 
 
 render(){
+  // create a loading indicator untill the get request for reviews is finished and a flatlist of reviews is rendered
   if(this.state.isLoading){
     return(
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -206,7 +219,7 @@ render(){
 const navigation=this.props.navigation;
 
   return(
-
+//Create a view to render the reviews Flatlist which item has its own buttons for like dislike, remove photo and an image prop
     <SafeAreaView style={styles.container}>
 
     <Text style={styles.titleText}>
@@ -260,8 +273,6 @@ const navigation=this.props.navigation;
 
 </View>
 }
-
-
   keyExtractor={(item, index) => index.toString()}
 
      />

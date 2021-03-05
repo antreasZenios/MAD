@@ -7,7 +7,7 @@ import { RNCamera } from 'react-native-camera';
 class Camera extends Component{
 
 
-
+// post request to send the photo to the server
   sendToServer = (data) => {
     const navigation=this.props.navigation;
 
@@ -28,6 +28,7 @@ class Camera extends Component{
     });
   }
 
+// Take piscture function to capture the photo
   takePicture = async() => {
     if(this.camera){
       const options = {quality: 0.5, base64: true};
@@ -39,6 +40,7 @@ class Camera extends Component{
 
 
   render(){
+    // Camera view and a button that when is pressed the take Picture function is triggered
     return (
       <View style={{flex:1}}>
         <RNCamera
