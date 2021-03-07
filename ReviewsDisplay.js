@@ -65,6 +65,11 @@ export default class ReviewsDisplay extends Component {
         Alert.alert("You have deleted this review !");
         this.getReviews();
     }
+    else if(response.status==400){Alert.alert("Bad Request")}
+    else if(response.status==401){Alert.alert("Unauthorised")}
+    else if(response.status==403){Alert.alert("Forbidden")}
+    else if(response.status==404){Alert.alert("Not Found")}
+    else if(response.status==500){Alert.alert("Server Error")}
   }
 
 )
@@ -143,10 +148,17 @@ export default class ReviewsDisplay extends Component {
     })
     .then((response) => {
       if(response.ok){
-
           Alert.alert("You have Liked this review !");
           this.getReviews();
-      }})
+      }
+
+      else if(response.status==400){Alert.alert("Bad Request")}
+      else if(response.status==401){Alert.alert("Unauthorised")}
+      else if(response.status==404){Alert.alert("Not Found")}
+      else if(response.status==500){Alert.alert("Server Error")}
+
+
+    })
       .catch((error) => {
           console.log(error);
       }
@@ -167,7 +179,15 @@ export default class ReviewsDisplay extends Component {
 
           Alert.alert("You have unliked this review !");
           this.getReviews();
-      }})
+      }
+
+      else if(response.status==401){Alert.alert("Unauthorised")}
+      else if(response.status==403){Alert.alert("Forbidden")}
+      else if(response.status==404){Alert.alert("Not Found")}
+      else if(response.status==500){Alert.alert("Server Error")}
+
+
+    })
       .catch((error) => {
           console.log(error);
       }
@@ -186,11 +206,13 @@ export default class ReviewsDisplay extends Component {
     })
     .then((response) => {
       if(response.ok){
-
           Alert.alert("Photo deleted !");
-
+          this.getReviews();
       }
-      this.getReviews();
+      else if(response.status==401){Alert.alert("Unauthorised")}
+      else if(response.status==403){Alert.alert("Forbidden")}
+      else if(response.status==404){Alert.alert("Not Found")}
+      else if(response.status==500){Alert.alert("Server Error")}
     })
       .catch((error) => {
           console.log(error);

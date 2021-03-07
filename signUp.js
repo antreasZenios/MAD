@@ -48,10 +48,9 @@ addUser = () => {
     Alert.alert("Account created! Use your credentials to login.");
     navigation.navigate("Login")
    }
-   else {
+   if(response.status=400){Alert.alert("Bad request")}
+   else{Alert.alert("Server Error")}
 
-     Alert.alert("Something went wrong")
-   }
   })
 
   .catch((error) => {

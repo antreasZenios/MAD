@@ -24,6 +24,11 @@ class Camera extends Component{
       navigation.navigate("Reviews")
     })
     .catch((error) => {
+       if(error==400){Alert.alert("Bad Request")}
+      else if(error==401){Alert.alert("Unauthorised")}
+      else if(error==403){Alert.alert("Forbidden")}
+      else if(error==404){Alert.alert("Not Found")}
+      else if(error==500){Alert.alert("Server Error")}
       console.error(error);
     });
   }

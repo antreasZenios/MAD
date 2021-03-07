@@ -46,9 +46,8 @@ class UserProfile extends Component{
       Alert.alert("You have successfuly logged out");
       navigation.navigate("Login")
      }
-     else {
-       Alert.alert("Something went wrong")
-     }
+     else if (response.status==401) { Alert.alert("Unauthorised") }
+     else if (response.status==500) { Alert.alert("Server Error") }
   })
     .catch((error) => {
         console.log(error);
@@ -80,12 +79,13 @@ class UserProfile extends Component{
       if(response.ok){
         this.getData();
       Alert.alert("Account updated!");
-
      }
-     else {
 
-       Alert.alert("Something went wrong")
-     }
+     else if(response.status==400){Alert.alert("Bad Request")}
+     else if(response.status==401){Alert.alert("Unauthorised")}
+     else if(response.status==403){Alert.alert("Forbidden")}
+     else if(response.status==404){Alert.alert("Not Found")}
+     else if(response.status==500){Alert.alert("Server Error")}
     })
 
     .catch((error) => {
@@ -116,10 +116,13 @@ class UserProfile extends Component{
     })
 
     .catch((error) => {
+      if(error==401){Alert.alert("Unauthorised")}
+      else if(error==404){Alert.alert("Not Found")}
+      else if(error==500){Alert.alert("Server Error")}
         console.log(error);
     });
   }
-
+//
 
 
 

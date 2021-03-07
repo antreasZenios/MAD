@@ -49,7 +49,13 @@ export default class Login extends Component {
 
          navigation.navigate('Home')
       })
+
+
       .catch((error) => {
+        if(error=400){
+          Alert.alert("Invalid email/password supplied")
+        }
+
         console.log(error);
       })
     }

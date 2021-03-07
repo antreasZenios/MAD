@@ -25,11 +25,6 @@ export default class Review extends Component {
 
 
 
-
-
-
-
-
 // Post request to add a new review that has filter where mentions of
 //tea , cakes and pastries are not allowed to be entered in the body of the review
   addReview = () => {
@@ -65,9 +60,10 @@ export default class Review extends Component {
       Alert.alert("Review posted!");
       navigation.navigate("Reviews");
      }
-     else {
-       Alert.alert("Something went wrong")
-     }
+     else if(response.status==400){Alert.alert("Bad Request")}
+     else if(response.status==401){Alert.alert("Unauthorised")}
+     else if(response.status==404){Alert.alert("Not Found")}
+     else if(response.status==500){Alert.alert("Server Error")}
     })
 
     .catch((error) => {
@@ -115,9 +111,11 @@ export default class Review extends Component {
         navigation.navigate("Reviews");
 
     }
-     else {
-       Alert.alert("Something went wrong")
-     }
+    else if(response.status==400){Alert.alert("Bad Request")}
+    else if(response.status==401){Alert.alert("Unauthorised")}
+    else if(response.status==403){Alert.alert("Forbidden")}
+    else if(response.status==404){Alert.alert("Not Found")}
+    else if(response.status==500){Alert.alert("Server Error")}
     })
 
     .catch((error) => {
