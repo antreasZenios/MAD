@@ -87,7 +87,7 @@ export default class Locations extends Component {
 
         Alert.alert("You have unfavourite this location !");
     }
-  
+
     else if(response.status==401){Alert.alert("Unauthorised")}
     else if(response.status==403){Alert.alert("Forbidden")}
     else if(response.status==404){Alert.alert("Not Found")}
@@ -113,10 +113,10 @@ export default class Locations extends Component {
 
 
 
-// Function that is triggered when an item of the flatlist is pressed and gives a user some options
+// Function that is triggered when an item of the flatlist is pressed and gives a user some options:
+// See the reviews for this location , favourite and unfavourite
   GetFlatListItem (item) {
  locID=item.location_id;
-
 
 
 
@@ -165,8 +165,6 @@ export default class Locations extends Component {
             locationList: responseJson,
 
         })
-
-
 
     })
 

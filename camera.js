@@ -33,7 +33,7 @@ class Camera extends Component{
     });
   }
 
-// Take piscture function to capture the photo
+// Take picture function to capture the photo
   takePicture = async() => {
     if(this.camera){
       const options = {quality: 0.5, base64: true};

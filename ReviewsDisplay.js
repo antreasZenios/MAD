@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { ActivityIndicator, Alert, Button, Text, TouchableOpacity, TextInput, View,SafeAreaView,ScrollView,StyleSheet,FlatList,Image } from 'react-native';
 import App from './App';
 import Locations from './Locations';
-import { RNCamera } from 'react-native-camera';
 import {styles} from "./StyleSheet";
 import Camera from './camera';
 

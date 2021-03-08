@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import { Alert, Button, Text, TouchableOpacity, TextInput, View,StyleSheet } from 'react-native';
-//import {styles} from './styleSheet';
 import App from './App';
 import Login from './Login';
 import {styles} from "./StyleSheet";
@@ -48,8 +47,9 @@ addUser = () => {
     Alert.alert("Account created! Use your credentials to login.");
     navigation.navigate("Login")
    }
-   if(response.status=400){Alert.alert("Bad request")}
-   else{Alert.alert("Server Error")}
+   else if(response.status==400){Alert.alert("Bad request")}
+   else if(response.status==500){Alert.alert("Server error")}
+  
 
   })
 
